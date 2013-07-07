@@ -1,0 +1,45 @@
+<head>
+<title>WebGuess</title>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<p>Welcome folks!</p>
+
+<p>This is a simple guessing game. Youn need to guess number from 0 to 100. I will say "greater" if my number is greater or "lesser" if my number is lesser or - if you right - "same!".</p>
+
+<p>So...</p>
+<% if guess %>
+<p>You guessed <i><%= params[:guess] %></i>. This is <%= count %> try. You may try <%= maxcount %> times. It's.. </p>
+<% if ok %>
+
+  <% if last_attempt %>
+<span class="result_error">Your made all attemts. Sorry...</span>
+  <% else %>
+  <% if result == 0 %>
+<span class="result_same">same!</span>
+ <% elsif result > 0 %>
+<span class="result_lesser">lesser</span>
+  <% else %>
+<span class="result_greater">greater</span>
+  <% end %>
+  <% end %>
+<% else %>
+<span class="result_error">Bad guess. You can guess only numbers from 0 to 100.</span>
+<% end %>
+     
+<% end %>
+
+<% if not last_attempt %>
+<p>What is your guess
+<% if is_cheating %>
+ (<%= number %>)
+<% end %>
+
+?</p>
+<form action="/" method="GET">
+<p><input type="text" name="guess" value="">
+<input type="submit" value="Make a guess">
+</form>
+<% end %>
+<p><a href="/reset">Start new game</a></p>
+</body>
