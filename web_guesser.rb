@@ -3,7 +3,7 @@ require 'sinatra/reloader'
 
 configure do
     set :number, rand(100)
-    set :maxcount, 2
+    set :maxcount, 5
     set :count, 0
 end
 
