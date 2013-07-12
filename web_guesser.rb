@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-enable :sessions
+#enable :sessions
 
 configure :development do
       register Sinatra::Reloader
