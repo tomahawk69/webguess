@@ -11,10 +11,13 @@ configure :development do
 end
 
 configure :production do
-      use Rack::Session::Cookie, 
-	:expire_after => 3600, # 1 hour
-	:secret => "top webguess secret",
-	:secure => true
+      #use Rack::Session::Cookie, 
+#	:expire_after => 3600, # 1 hour
+#	:secret => "top webguess secret",
+#	:secure => true
+      enable :sessions
+      set :session_secret, "top webguess secret"
+      set :session_secure, false
 end
 
 
