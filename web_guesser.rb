@@ -7,12 +7,12 @@ configure :development do
       register Sinatra::Reloader
 end
 
-configure do
+#configure do
 	use Rack::Session::Cookie, 
 		:expire_after => 3600, # 1 hour
                 :secret => SecureRandom.hex(32),
 		:secure => true
-end
+#end
 
 
 
