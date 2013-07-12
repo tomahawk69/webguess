@@ -34,12 +34,6 @@
 <% end %>
 
 
-  <% session.keys.each_index do |index| %>
-    <li>
-	<%= session.keys[index] %> - <%= session[session.keys[index]] %>
-  <% end %>
-
-
 <% if not session[:done] and session[:history].count() < maxcount and session[:history].count() < maxcount %>
 <p>What is your guess
 <% if is_cheat %>
