@@ -8,11 +8,12 @@ configure :development do
 end
 
 #configure do
+#end
+
 	use Rack::Session::Cookie, 
 		:expire_after => 3600, # 1 hour
-                :secret => SecureRandom.hex(32),
+                :secret => "top webguess secret",
 		:secure => true
-#end
 
 
 
