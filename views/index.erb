@@ -2,44 +2,52 @@
 <title>WebGuess</title>
 <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
-<p>Welcome folks!</p>
 
-<p>This is a simple guessing game. Youn need to guess number from 0 to 100. I will say "greater" if my number is greater or "lesser" if my number is lesser or - if you right - "same!".</p>
+<body style="background-color: <%= session[:color] %>">
+<h1>WebGuess</h1>
 
-<p>So...</p>
-<% if guess %>
-<p>You guessed <i><%= params[:guess] %></i>. This is <%= count %> try. You may try <%= maxcount %> times. It's.. </p>
-<% if ok %>
+<p>This is a guessing game. You need to guess number from 0 to 99. I will say "Too high" if my number is lesser or "Way too high" if my number is much lesser (let's say... difference is equal or more then <%= waytoo %>) and "Too low" if my number greater or "Way too low" is my number is much greater. If you will guess the number I will say "Correct!"</p>
+<p>You may try <%= maxcount %> times</p>
+<p>If you are stuck or want to start a new game, there is a link to reset game below.</p>
+<p>Hint: there is a cheat mode in the game.</p>
 
-  <% if last_attempt %>
-<span class="result_error">Your made all attemts. Sorry...</span>
-  <% else %>
-  <% if result == 0 %>
-<span class="result_same">same!</span>
- <% elsif result > 0 %>
-<span class="result_lesser">lesser</span>
-  <% else %>
-<span class="result_greater">greater</span>
-  <% end %>
-  <% end %>
-<% else %>
-<span class="result_error">Bad guess. You can guess only numbers from 0 to 100.</span>
-<% end %>
-     
+<p>&nbsp</p><p>So...</p>
+<%if session[:error] %>
+<p style="font-weight: bold;"><%= session[:error] %></p>
 <% end %>
 
-<% if not last_attempt %>
+<% if session[:history].count() > 0 %>
+<p>You guessed:</p>
+  <ol>
+  <% session[:history].keys.each_index do |index| %>
+    <li>
+	<% if index+1 == session[:history].keys.count() %>
+	<span style="font-weight: bold">
+  	<% end %>
+	<%= session[:history].keys[index] %> - <%= session[:history][session[:history].keys[index]] %>
+	<% if index+1 == session[:history].keys.count() %>
+	</span>
+  	<% end %>
+  <% end %>
+  </ol>
+
+<% end %>
+
+<% if not session[:done] and session[:history].count() < maxcount and session[:history].count() < maxcount %>
 <p>What is your guess
-<% if is_cheating %>
- (<%= number %>)
+<% if is_cheat %>
+ (hint: it is <%= session[:number] %>)
 <% end %>
-
 ?</p>
 <form action="/" method="GET">
 <p><input type="text" name="guess" value="">
+<% if is_cheat %>
+<input type="hidden" name="cheat" value="1">
+<% end %>
 <input type="submit" value="Make a guess">
 </form>
+<% else %>
+<p>The game is over! My number was <%= session[:number] %></p>
 <% end %>
 <p><a href="/reset">Start new game</a></p>
 </body>
