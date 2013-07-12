@@ -1,25 +1,26 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-#enable :sessions
+
 
 configure :development do
       register Sinatra::Reloader
+      enable :sessions
+      set :session_secret, "top webguess secret"
+      set :session_secure, false
 end
 
-#configure do
-#end
-
-	use Rack::Session::Cookie, 
-		:expire_after => 3600, # 1 hour
-                :secret => "top webguess secret",
-		:secure => true
-
+configure :production do
+      use Rack::Session::Cookie, 
+	:expire_after => 3600, # 1 hour
+	:secret => "top webguess secret",
+	:secure => true
+end
 
 
 MAXCOUNT = 7
 WAYTOO = 10
-VERSION = 3
+VERSION = 4
 
 get '/' do
   reset() if not session[:init] or not session[:version] or session[:version] != get_version()
@@ -38,6 +39,7 @@ end
 # functions
 
 def check_guess
+    #session[:history]['test'] = 'test'	
     session[:error] = ''
     return if is_done()
     if is_guess() then
@@ -70,6 +72,8 @@ def check_guess
               end 
 	   end
 	   session[:history][params[:guess]] = result if not session[:history].has_key?(params[:guess])
+    #session[:history]['test2'] = 'test2'	
+
 	end
     end
 end
